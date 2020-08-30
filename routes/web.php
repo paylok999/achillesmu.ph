@@ -19,6 +19,7 @@ Route::get('/', 'HomeController@show');
 Route::get('/updates/{id}/{subject}', 'HomeController@showUpdates');
 Route::get('/register', 'HomeController@register');
 Route::get('/rankings', 'HomeController@rank');
+Route::get('/rankings/{season}', 'HomeController@rank');
 Route::get('/bloodcastle-rankings', 'HomeController@bcrank');
 Route::get('/gens-rankings', 'HomeController@gensrank');
 Route::get('/donations', 'HomeController@donations');
@@ -42,6 +43,10 @@ Route::get('/lottery', 'HomeController@lottery');
 Route::post('/lottery', 'HomeController@postLottery');
 Route::get('/main', 'HomeController@mainLauncher');
 Route::get('/news', 'HomeController@newsLauncher');
+Route::get('/more', 'HomeController@moreLauncher');
+
+Route::get('/server-info/s15', 'HomeController@s15ServerInfo');
+Route::get('/server-info/s2', 'HomeController@s2ServerInfo');
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');

@@ -5,7 +5,7 @@ body{
 	width:240px;
 	height:100px;
 	overflow-y: scroll;
-	background-color: black;
+	background-color: #1d0c0c;
     color: white;
 }
 h3{
@@ -30,7 +30,7 @@ h4{
 </style>
 <div style=" width:250px; height:100px; overflow-y:scroll">
 @foreach($updates as $key => $v)
-<div style="border-bottom:dotted 1px #ccc;padding-bottom: 5px; padding-top: 5px;"> 
+<div style="border-bottom:1px dashed #67482e;padding-bottom: 5px; padding-top: 5px;"> 
 <h3>{{$v->subject}}</h3>
 <h4>{{ date('F d, Y', strtotime($v->created_at)) }}</h4>
 <a href="/updates/{{ $v->id }}/{{ strtolower(str_replace(' ', '-',$v->subject)) }}" target="_blank">Read</a>

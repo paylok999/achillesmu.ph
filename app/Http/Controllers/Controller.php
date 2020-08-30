@@ -22,6 +22,7 @@ class Controller extends BaseController
     public function __construct()
     {
     	$this->data['rankings'] = $this->rankings();
+    	$this->data['rankingss15'] = $this->rankingss15();
     	$this->data['bcrankings'] = $this->bcRankings();
     	$this->data['gensrankings'] = $this->gensRankings();
     	$this->data['online'] = $this->getonline();
@@ -72,6 +73,13 @@ class Controller extends BaseController
     public function rankings()
     {
     	$postback_url =  '/achillesmu/public/api/character/rankings';
+    	$res = $this->callGetApi($postback_url);
+    	return $res;
+    }
+    
+    public function rankingss15()
+    {
+    	$postback_url =  '/achillesmu/public/api/character/rankings/s15';
     	$res = $this->callGetApi($postback_url);
     	return $res;
     }

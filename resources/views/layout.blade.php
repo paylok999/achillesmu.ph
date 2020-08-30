@@ -1,59 +1,58 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<title>Achilles Mu - MU Online Season 2</title>
+<title>Sea MU Online</title>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" href="/img/ico.png" type="image/png" />
 <style>
 
 @font-face {
-font-family: "satyr";
-src: url("/css/satyr.ttf");
+font-family: "Helvetica";
 }
 
 body { 
 	width: 100%;
-	background: url(/img/bg.png) no-repeat center top;
+	background: url(/img/bg_v3.jpg) no-repeat center top;
 	background-color:black;
 	color:white;
 	
 }
 
-#body-container{
-	
-    
-	
+.body-container{
 	width: 1300px;
 	margin: 0 auto;
 }
 
 header{
-	margin-top:100px;
 	margin-left:auto;
 	margin-right:auto;
-	width: 1140px;
+	max-width: 1140px;
+    width:100%;
+    text-align:center;
 }
-header .header-nav{
-	display:inline-block;
+.header-nav{
+    text-align:center;
+    margin-bottom: 20px;
 }
 #left-nav{
 	width:422px;
 	height:55px;
 }
 .navi{
-	width:422px;
-	height:55px;
-	background: url(/img/navi_bg.png) no-repeat center top;
-	background-color:black;
-	padding:8px;
+	width: 100%;
+    height: 58px;
+    background: url(/img/navi_bg.png) no-repeat center top;
+    text-align: center;
 }
 .navi ul{
 	list-style-type: none;
 	margin: 0 !important;
-    padding: 0;
-	font-size:25px;
+	font-size:15px;
+    padding: 20px 0;
+    font-weight: bold;
 }
 .navi li{
 	display:inline-block;
@@ -62,7 +61,7 @@ header .header-nav{
 
 .navi li a{
 	font-family: 'satyr', Arial, sans-serif;
-	color:#cfb265;
+	color:#fff;
 	text-decoration:none;
 }
 .navi li a:hover{
@@ -115,15 +114,17 @@ header .header-nav{
 }
 
 #content #announcement{
-	margin: 0 20px;
-    background-color: black;
+    padding:10px;
 	height: 100%;
+    background: #3c2c1f url(/img/header_bg.jpg) repeat-x;
+    margin-bottom:10px;
+    min-height:265px;
 }
 
 #announcement h1{
 	color: #cfb265;
     padding: 10px;
-    border-bottom: solid 1px #7d7a7a;
+    border-bottom: solid 1px #67482e;
     margin-left: 15px;
     margin-right: 15px;
 	
@@ -153,27 +154,28 @@ header .header-nav{
 }
 
 #right-content{
-	width: 400px;
+	width: 25%;
 	height:auto;
 }
 
 #right-content h2{
-	color:#cfb265;
+	color:#ffb400;
 	text-align:left;
-	border-bottom: solid 1px #7d7a7a;
-	margin:10px;
+	border-bottom: solid 1px #67482e;
 	font-family: 'satyr', Arial, sans-serif;
+    font-size: 20px;
+    padding: 10px;
 }
 
 .right-content-border{
-	border: solid 5px #947652;
-	background-color: black;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
+    background: #1d0c0c  url(/img/header_bg.jpg) repeat-x;
+    background-size: 10px 45px;
 }
 
 #right-content #account-info{
 	width: 100%;
-    height: 270px;
+    height: 265px;
 	
 }
 
@@ -185,29 +187,34 @@ footer{
 }
 #serverinfo table{
 	font-size:12px;
-	background-color: black;
+	background-color: transparent;
 	margin: 0 auto;
 	width: 90%;
 	margin-bottom: 5px;
 }
 
 #serverinfo tr {
-    line-height: 2px;
+    line-height: 5px;
 }
 
+
 #serverinfo th {
-        border-bottom: 1px dotted #6d6d6d;
+        border-bottom: 1px dashed #67482e;
 		border-top: none !important;
 }
 
 #serverinfo td {
 		border-top: none !important;
-        border-bottom: 1px dotted #6d6d6d;
+        border-bottom: 1px dashed #67482e;
+        line-height:20px;
 }
 
 #serverinfo .server-stat{
 	color:#cfb265;
-	width:20%;
+	width:50%;
+}
+#serverinfo .server-value {
+    text-align:left;
 }
 #loginFormcontent{
 	width:90%;
@@ -228,9 +235,15 @@ footer{
     color: white;
     font-size: 13px;
 }
-#loginFormcontent input{
-	background-color: #25242a;
-    border-color: #000000;
+input{
+	background-color: #331c0a !important;
+    border-color: #251509 !important;
+}
+.form-control{
+    color:#fff;
+}
+::placeholder {
+    color:#fff;
 }
 
 #welcome-page{
@@ -245,7 +258,7 @@ footer{
 #welcome-page h1{
 	font-size: 34px;
     padding: 22px 0;
-	font-family: 'satyr', Arial, sans-serif;
+    color:#ffb400;
 }
 
 .btn-login{
@@ -271,7 +284,7 @@ footer li{
 footer li a{
 	display: inline-block;
     padding: 10px 30px;
-    font-size: 25px;
+    font-size: 15px;
 	font-family: 'satyr', Arial, sans-serif;
 	color:#cfb265;
 	text-decoration:none;
@@ -302,13 +315,9 @@ footer #footer-content{
 	padding: 20px;
     margin: 10px;
 }
-#register input{
-	background-color: #25242a !important;
-    border-color: #000000 !important;
-}
 
 #page-content{
-	padding: 10px;
+	padding: 0;
 	
 }
 #page-content p{
@@ -328,6 +337,43 @@ footer #footer-content{
 .content-wrapper{
 	padding: 10px 29px;
     font-size: 13px;
+}
+.client-area{
+    padding:20px 0;
+}
+
+.client-area .client-img{
+    width:100%;
+    max-width: 230px;
+}
+.client-area .logo-img{
+    width:100%;
+    max-width: 300px;
+    margin: 0 180px;
+    vertical-align: text-top;
+}
+.read-more{
+    padding: 10px;
+    margin: 10px 20px;
+}
+
+.read-more a{
+    color:#f59797  !important;
+}
+.center-area{
+    display:inline-block;
+    width:25%;
+    float:left;
+}
+
+#content h1{
+    margin:0;
+    padding:20px;
+}
+
+#content-container{
+    padding: 20px;
+    margin: 10px;
 }
 </style>
 <div id="fb-root"></div>
@@ -417,47 +463,147 @@ $(function(){
 </script>
 
 <body>
-<div id="body-container">
+<div class="body-container">
 <header>
-<div class="header-nav">
-	<div class="navi">
-		<ul>
-			<li><a href="/">HOME</a></li>
-			<li style="padding: 0 16px;"><a href="/register">REGISTER</a></li>
-			<li><a href="{{$client_download}}" target="_blank">DOWNLOAD</a></li>
-		</ul>
-	</div>
-</div>
-<div class="header-nav"><img src="/img/logo.png"></div>
-<div class="header-nav">
-	<div class="navi">
-		<ul>
-			<li><a href="/donate">TOP UP</a></li>
-			<li><a href="/rankings">RANKING</a></li>
-			<li><a href="https://web.facebook.com/groups/320535715238147/" target="_blank">FORUM</a></li>
-		</ul>
-	</div>
+<div class="client-area">
+    <a href="{!! $content->where('id', 9)->first()->content !!}" target="_blank">
+        <img src="/img/s2_v1.png" class="client-img">
+    </a>
+    <img src="/img/mu_logo.png" class="logo-img">
+    
+    <a href="{!! $content->where('id', 10)->first()->content !!}" target="_blank">
+        <img src="/img/s15_v1.png" class="client-img">
+    </a>
 </div>
 </header>
-
+</div>
+<div class="header-nav">
+	<div class="navi">
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li style="padding: 0 16px;"><a href="/register">Register</a></li>
+			<li><a href="https://web.facebook.com/groups/551357492208200/" target="_blank">Community</a></li>
+			<li><a href="https://web.facebook.com/seamudotnet" target="_blank">Support</a></li>
+			<li><a href="/rankings">Rankings</a></li>
+		</ul>
+	</div>
+</div>
+<div class="body-container">
 <div id="content">
-	<div id="left-content" class="float-left">
-		<div id="x-background"></div>
-		<div id="y-background">
-			<div id="announcement">
-				<div id="welcome-page">
-				<h1>Welcome to Achilles MU</h1>
-				<p> A Community of Well Experienced and Professional MU Players gathered together by their Love and Passion on playing MU Online Game… The Castle Siege, the Duel Room, PVP Fight and Events are the most Important Module of Achilles MU Season 2. We have our Donation System that also will have reflections of charity that will help our fellow Filipino. Achilles MU is not only a Game it is a Community that will reach out and help in a simple way.</p>
-				</div>
-				<div id="content">
-					@yield('content')
-				</div>
-				
-			</div>
+	<div id="right-content" class="center-area">
+        <div id="account-info" class="right-content-border" style="overflow:hidden">
+			<h2>Our Facebook Page</h2>
+			<div class="fb-page" data-href="https://web.facebook.com/seamudotnet/" data-tabs="timeline" data-width="336" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
 		</div>
+        <div id="serverinfo" class="right-content-border">
+			<h2>Season 2 Information</h2>
+			<table  class="table table-dark">
+			  <thead>
+			
+			  </thead>
+			  <tbody>
+				<tr>
+					<td class="server-stat">Version</td>
+					<td class="server-value">Season 2</td>
+				</tr>
+				<tr>
+					<td class="server-stat">Experience</td>
+					<td class="server-value">x10</td>
+				</tr>
+                <tr>
+					<td class="server-stat">Seal Experience</td>
+					<td class="server-value">None</td>
+				</tr>
+                <tr>
+					<td class="server-stat">VIP Server</td>
+					<td class="server-value">None</td>
+				</tr>
+
+				<tr>
+					<td class="server-stat">Max Level</td>
+					<td class="server-value">400</td>
+				</tr>
+	
+				<tr>
+					<td class="server-stat">Max Class</td>
+					<td class="server-value">Second</td>
+				</tr>
+				<tr>
+					<td class="server-stat">Max Wing</td>
+					<td class="server-value">Second</td>
+				</tr>
+				<tr>
+					<td class="server-stat">Max Item Level</td>
+					<td class="server-value">13</td>
+				</tr>
+				<tr>
+					<td class="server-stat">Summoner</td>
+					<td class="server-value">No</td>
+				</tr>
+				<tr>
+					<td class="server-stat">Rage Fighter</td>
+					<td class="server-value">No</td>
+				</tr>
+				</tr>
+			  </tbody>
+			</table>
+            <div class="read-more"><a href="/server-info/s2">Read more
+            <svg class="bi bi-chevron-double-right" width="10px" height="10px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+            </a></div>
+		</div>
+        <div id="serverinfo" class="right-content-border">
+            <h2>Season 2 Rankings</h2>
+            <div class="read-more">
+                <table  class="table table-dark">
+                    <tr>
+                      <th>Rank</th>
+                      <th>Name</th>
+                      <th>Level</th>
+
+                    </tr>
+                @foreach($rankings as $key => $v)
+                    @if($key < 5)
+                    <tr>
+                        <td class="server-stat">{{$key+1}}</td>
+                        <td class="server-stat">{{$v->name}}</td>
+                        <td class="server-value">{{$v->total_level}}</td>
+                    </tr>
+                    @endif
+                @endforeach
+                </table>
+                <a href="/rankings/s2">Read more
+                <svg class="bi bi-chevron-double-right" width="10px" height="10px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+                </a>
+            </div>
+		</div>
+    </div>
+	<div id="left-content" class="center-area" style="width:48%; margin:0 10px;">
+        <div id="announcement">
+            <div id="welcome-page">
+            <h1>Welcome to Sea MU!</h1>
+            <p> A Community of Well Experienced and Professional MU Players gathered together by their Love and Passion on playing MU Online Game… The Castle Siege, the Duel Room, PVP Fight and Events are the most Important Module of Sea MU.</p>
+            </div>
+            <!--<div id="content">
+                @yield('content')
+            </div>-->
+            
+        </div>
+        
+        <div id="announcement" style="background-size: 10px 73px;background-color:#1d0c0c;padding:0">
+            <div id="content" style="margin:0">
+                @yield('content')
+            </div>
+            
+        </div>
 		<!--<div id="x-background-bot"></div>-->
 	</div>
-	<div id="right-content" class="float-right">
+	<div id="right-content" class="center-area">
 		<div id="account-info" class="right-content-border">
 			<h2>Account @if (Auth::check()) Information @else Login @endif</h2>
 			@if (Auth::check())
@@ -466,7 +612,6 @@ $(function(){
 				<ul>
 					<li><a href="{{ url('/') }}/account/info">Account Information</a></li>
 					<li><a href="{{ url('/') }}/account/change-password">Change Password</a></li>
-					<li><a href="{{ url('/') }}/account/vip">Go VIP</a></li>
 					<li><a href="{{ url('/') }}/logout">Logout</a></li>
 				</ul>
 			</div>
@@ -491,107 +636,94 @@ $(function(){
 			</div>
 			@endif
 		</div>
-		<div id="serverinfo" class="right-content-border">
-			<h2>Server Info</h2>
+        <div id="serverinfo" class="right-content-border">
+			<h2>Season 15 Information</h2>
 			<table  class="table table-dark">
 			  <thead>
-				<tr>
-				  <th style="width: 10%">Option</th>
-				  <th style="width: 15%">Achilles MU Season 2</th>
-				</tr>
+			
 			  </thead>
 			  <tbody>
 				<tr>
-					<td class="server-stat">Date Opened</td>
-					<td class="server-value">February 4, 2018</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Version</td>
-					<td class="server-value">Season 2</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Experience</td>
-					<td class="server-value">x2</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Drop</td>
-					<td class="server-value">10%</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Rebirth</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Level</td>
-					<td class="server-value">400</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Master Level</td>
-					<td class="server-value">0</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Class</td>
-					<td class="server-value">Second</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Wing</td>
-					<td class="server-value">Second</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Item Level</td>
-					<td class="server-value">13</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Mastering</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Summoner</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Rage Fighter</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">380 System</td>
-					<td class="server-value">Yes</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Elemental System</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Hack and Scam Support</td>
-					<td class="server-value">Yes</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Talisman of Luck</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Talisman of Chaos Assembly</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Talisman of Ultimatum</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Lucky Set</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat" style="border:none !important">Damage/Buffs Scroll</td>
-					<td class="server-value" style="border:none !important">No</td>
-				</tr>
+                    <td class="server-stat">Version</td>
+                    <td class="server-value">Season 15 Part 1-3</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Normal Experience</td>
+                    <td class="server-value">x1500</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Master Experience</td>
+                    <td class="server-value">x1500</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Majestic Experience</td>
+                    <td class="server-value">x1500</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Experience Multiplies</td>
+                    <td class="server-value">x3 bonus per member</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Seal Experience</td>
+                    <td class="server-value">None</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">VIP Server</td>
+                    <td class="server-value">None</td>
+                </tr>
+
+                <tr>
+                    <td class="server-stat">Max Normal Level</td>
+                    <td class="server-value">400</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Max Master Level</td>
+                    <td class="server-value">400</td>
+                </tr>
+                <tr>
+                    <td class="server-stat">Max Majestic Level</td>
+                    <td class="server-value">400</td>
+                </tr>
 			  </tbody>
 			</table>
+            <div class="read-more">
+                <a href="/server-info/s15">Read more
+                <svg class="bi bi-chevron-double-right" width="10px" height="10px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+                </a>
+            </div>
 		</div>
-		<div id="serverinfo" class="right-content-border" style="text-align: center;padding-bottom: 10px;">
-			<h2>Our Facebook Page</h2>
-			<div class="fb-page" data-href="https://web.facebook.com/AchillesMUSupportandIssuesPage/" data-tabs="timeline" data-width="336" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
 		
+		<div id="serverinfo" class="right-content-border">
+            <h2>Season 15 Rankings</h2>
+            <table  class="table table-dark">
+                    <tr>
+                      <th>Rank</th>
+                      <th>Name</th>
+                      <th>Level</th>
+
+                    </tr>
+                @foreach($rankingss15 as $key => $v)
+                    @if($key < 5)
+                    <tr>
+                        <td class="server-stat">{{$key+1}}</td>
+                        <td class="server-stat">{{$v->name}}</td>
+                        <td class="server-value">{{$v->total_level}}</td>
+                    </tr>
+                    @endif
+                @endforeach
+                </table>
+                
+            <div class="read-more">
+                <a href="/rankings/s15">Read more
+                <svg class="bi bi-chevron-double-right" width="10px" height="10px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+                </a>
+            </div>
 		</div>
 	</div>
 </div>
@@ -610,12 +742,12 @@ $(function(){
 		</ul>
 		<div id="footer-btm">
 			<div class="float-left">
-				<p>Achilles MU Online Philippines Provided by IGC Network</p>
-				<p>Copyright Achilles MU</p>
+				<p>Sea MU Online Provided by IGC Network</p>
+				<p>Copyright Sea MU</p>
 				<p>ALL RIGHTS RESERVE</p>
 			</div>
 			<div class="float-right">
-				<img src="/img/logo.png" style="width:100px">
+				<img src="/img/mu_logo.png" style="width:175px">
 			</div>
 			<div class="clearfix"></div>
 		</div>

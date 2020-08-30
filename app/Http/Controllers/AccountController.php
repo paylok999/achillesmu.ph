@@ -128,6 +128,7 @@ class AccountController extends Controller
 		
 		$this->data['current_name'] = $request->charname;
 		$this->data['wcoins'] = $this->getCurrentWcoins(Auth::user()->memb___id);
+        
 		return view('account.rename', $this->data);
 	}
 	

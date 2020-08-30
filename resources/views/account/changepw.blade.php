@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Change Password</h1>
+<div id="content-container">
 <p>Please fill in the form details below in order to change your password</p>
 <p style="color:{{ session('suc') == 1 ? 'green' : 'red' }}">{!! session('msg') !!}</p>
 <form action="{{ url('/') }}/account/change-password" method="post">
@@ -23,4 +24,5 @@
 
 	<button type="submit" class="btn btn-primary" style="padding: 4px;margin: 4px;margin-left: 0;font-size: 13px;">Submit</button>
 </form>
+</div>
 @stop

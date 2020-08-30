@@ -27,8 +27,9 @@ class HomeController extends Controller
 		return view('pages.register', $this->data);
 	}
 
-	public function rank()
+	public function rank($season = 's2')
 	{
+        $this->data['season'] = $season;
 		return view('pages.rankings', $this->data);
 	}
 	
@@ -90,6 +91,12 @@ class HomeController extends Controller
 	public function newsLauncher()
 	{
 		return view('pages.news', $this->data);
+	}
+    
+    public function moreLauncher()
+	{
+        $latestUpdate = $this->data['updates']->first();
+        return redirect('/updates/'.$latestUpdate->id.'/'.strtolower(str_replace(' ', '-',$latestUpdate->subject)));
 	}
 	
 	public function lottery()
@@ -258,4 +265,16 @@ class HomeController extends Controller
 		Auth::logout();
 		return redirect('/');
 	}
+    
+    public function s15ServerInfo()
+    {
+        return view('pages.server_info_s15', $this->data);
+        
+    }
+    
+    public function s2ServerInfo()
+    {
+        return view('pages.server_info_s2', $this->data);
+        
+    }
 }

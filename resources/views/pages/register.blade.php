@@ -1,8 +1,9 @@
 @extends('layout')
 
 @section('content')
-<div id="register">
+
 <h1>Registration</h1>
+<div id="register">
 <p>Please fill out the registration form below in order to start playing with us.</p>
 
 <p style="color:{{ session('suc') == 1 ? 'green' : 'red' }}">{!! session('msg') !!}</p>

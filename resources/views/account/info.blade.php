@@ -3,27 +3,32 @@
 @section('content')
 <style>
 #account-info-cont{
-	margin:0 auto; text-align:center;
+	
 }
 .account{
 	color: #ff9393;
     margin-bottom: 0px;
-    border-bottom: solid 1px #ccc;
     max-width: 409px;
     margin: 0 auto;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
 	    
 }
 </style>
-
-<div id="account-info-cont">
 <h1>Account Information</h1>
+<div id="content-container" style="margin:0 auto; text-align:center;">
+
 <p>Below you can see your account information</p>
+
 <p class="account">Username: {{Auth::user()->memb___id}}</p>
 <p class="account">Email: {{Auth::user()->mail_addr}}</p>
+<h4>Season 2</h4>
 <p class="account">WcoinsC: {{$wcoins->WCoinC}}</p>
 <p class="account">WcoinsP: {{$wcoins->WCoinP}}</p>
 <p class="account">Goblin Points: {{$wcoins->GoblinPoint}}</p>
+<h4>Season 15</h4>
+<p class="account">Wcoins: {{$wcoins->WCoin}}</p>
+
+<p class="account">Goblin Points: {{$wcoins->GoblinPoint15}}</p>
 
 <h1>Characters</h1>
 <p>Below you can see your character details</p>
