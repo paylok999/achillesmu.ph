@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Transfer Wcoins</h1>
+<div id="content-container" style="margin:0 auto; text-align:center;">
 <p>You can use the feature below to transfer your wcoins to another account. Make sure all account is log off.</p>
 <p>NOTE: THIS IS A MERCHANT ONLY FEATURE. CONTACT US IF YOU WANT TO BE A MERCHANT</p>
 <p style="color:#ff7878">Your current wcoins: {{$wcoins->WCoin}}</p>
@@ -21,4 +22,5 @@
 
 	<button type="submit" class="btn btn-primary" style="padding: 4px;margin: 4px;margin-left: 0;font-size: 13px;">Submit</button>
 </form>
+</div>
 @stop

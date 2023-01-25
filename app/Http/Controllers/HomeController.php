@@ -37,6 +37,16 @@ class HomeController extends Controller
 	{
 		return view('pages.bcrank', $this->data);
 	}
+    
+    public function ccrank()
+	{
+		return view('pages.ccrank', $this->data);
+	}
+    
+    public function dsrank()
+	{
+		return view('pages.dsrank', $this->data);
+	}
 	
 	public function gensrank()
 	{
@@ -86,6 +96,11 @@ class HomeController extends Controller
 	public function mainLauncher()
 	{
 		return view('pages.main', $this->data);
+	}
+	
+	public function s18MainLauncher()
+	{
+		return view('pages.s18main', $this->data);
 	}
 	
 	public function newsLauncher()
@@ -275,6 +290,12 @@ class HomeController extends Controller
     public function s2ServerInfo()
     {
         return view('pages.server_info_s2', $this->data);
+        
+    }
+    
+    public function getClassRanking()
+    {
+        return view('pages.classranking', $this->data);
         
     }
 }

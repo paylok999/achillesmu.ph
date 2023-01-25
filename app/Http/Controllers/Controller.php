@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
@@ -19,19 +20,22 @@ class Controller extends BaseController
 	public $updates = [];
 	public $vip;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
     	$this->data['rankings'] = $this->rankings();
     	$this->data['rankingss15'] = $this->rankingss15();
     	$this->data['bcrankings'] = $this->bcRankings();
+    	$this->data['ccrankings'] = $this->ccRankings();
+    	$this->data['dsrankings'] = $this->dsRankings();
     	$this->data['gensrankings'] = $this->gensRankings();
     	$this->data['online'] = $this->getonline();
+    	$this->data['classrankings'] = $this->classRankings($request->classranking);
 		$this->data['updates'] = $this->getLastestUpdates();
 		$this->data['lottery'] = $this->getLottery();
 		$this->data['lottery_users'] = $this->getLotteryUser();
 		$this->data['content'] = $this->getContent();
 		$this->data['vip_status'] = [0 => 'Not VIP', 1 => 'VIP', 2 => 'Silver', 3 => 'Gold', 4 => 'Platinum'];
-		$this->data['merchant'] = ['rayjohn91', 'Achilles11', 'killua12', 'carinoso'];
+		$this->data['merchant'] = ['pmutestbk', 'admin', 'keekyow'];
 		$this->data['client_download'] = $this->data['content']->where('id', 8)->first()->content;
 		
     }
@@ -72,37 +76,93 @@ class Controller extends BaseController
 
     public function rankings()
     {
-    	$postback_url =  '/achillesmu/public/api/character/rankings';
-    	$res = $this->callGetApi($postback_url);
-    	return $res;
+        $value = Cache::remember('rankings', 2, function () {
+            
+            $postback_url =  '/achillesmu/public/api/character/rankings';
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+        });
+        
+        return $value;
     }
     
     public function rankingss15()
     {
-    	$postback_url =  '/achillesmu/public/api/character/rankings/s15';
-    	$res = $this->callGetApi($postback_url);
-    	return $res;
+        $value = Cache::remember('rankingss15', 2, function () {
+            
+            $postback_url =  '/achillesmu/public/api/character/rankings/s15';
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+        });
+        
+        return $value;
     }
 	
 	public function bcRankings()
     {
-    	$postback_url =  '/achillesmu/public/api/character/bloodcastle';
-    	$res = $this->callGetApi($postback_url);
-    	return $res;
+         $value = Cache::remember('rankingssbc', 10, function () {
+             
+            $postback_url =  '/achillesmu/public/api/character/bloodcastle';
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+         });
+        
+        return $value;
+    }
+    
+    public function dsRankings()
+    {
+         $value = Cache::remember('rankingssds', 10, function () {
+             
+            $postback_url =  '/achillesmu/public/api/character/devilsquare';
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+         });
+        
+        return $value;
+    }
+    
+    public function ccRankings()
+    {
+         $value = Cache::remember('rankingsscc', 10, function () {
+             
+            $postback_url =  '/achillesmu/public/api/character/chaoscastle';
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+         });
+        
+        return $value;
     }
 	
 	public function gensRankings()
     {
-    	$postback_url =  '/achillesmu/public/api/character/gens';
-    	$res = $this->callGetApi($postback_url);
-    	return $res;
+        $value = Cache::remember('rankingsgens', 10, function () {
+            
+            $postback_url =  '/achillesmu/public/api/character/gens';
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+        });
+        
+        return $value;
     }
 
     public function getonline()
     {
-    	$postback_url =  '/achillesmu/public/api/allonline';
-    	$res = $this->callGetApi($postback_url);
-    	return count($res);
+         $value = Cache::remember('online', 5, function () {
+             
+            $postback_url =  '/achillesmu/public/api/allonline';
+            $res = $this->callGetApi($postback_url);
+            return count($res);
+            
+        });
+        
+        return $value;
     }
 	
 	public function getLastestUpdates()
@@ -162,5 +222,78 @@ class Controller extends BaseController
 	{
 		$url2 = '/achillesmu/public/api/user/coininfo/'. $username;
 		return $this->callGetApi($url2, $data = array());
+	}
+    
+    public function classRankings($class = 167)
+    {
+         if($class == null) {
+                $class = 167;
+            }
+       
+        $value = Cache::remember('classrankings-'.$class, 2, function () use ($class) {
+            
+            
+            
+            $postback_url =  '/achillesmu/public/api/character/classraking/'.$class;
+            $res = $this->callGetApi($postback_url);
+            return $res;
+            
+        });
+        
+        return $value;
+    }
+    
+    public function getUser($username)
+    {
+        if (strpos($username, 'admin') !== false) {
+            return array();
+        }else{
+            $postback_url =  '/achillesmu/public/api/account/byusername/'.$username;
+            $res = $this->callGetApi($postback_url);
+            return $res;
+        }
+    }
+	
+	public function generateRafflePrizes()
+	{
+		return [
+			'14,13,10' => 'Jewel Of Bless x10',
+			'14,13,20' => 'Jewel Of Bless x20',
+			'14,13,30' => 'Jewel Of Bless x30',
+			
+			'14,14,10' => 'Jewel Of Soul x10',
+			'14,14,20' => 'Jewel Of Soul x20',
+			'14,14,30' => 'Jewel Of Soul x30',
+			
+			'14,16,10' => 'Jewel Of Life x10',
+			'14,16,20' => 'Jewel Of Life x20',
+			'14,16,30' => 'Jewel Of Life x30',
+			
+			'14,22,10' => 'Jewel Of Creation x10',
+			'14,22,20' => 'Jewel Of Creation x20',
+			'14,22,30' => 'Jewel Of Creation x30',
+			
+			'14,42,10' => 'Jewel Of Harmony x10',
+			'14,42,20' => 'Jewel Of Harmony x20',
+			'14,42,30' => 'Jewel Of Harmony x30',
+		];
+	}
+	
+	public function verifyGoogleRecaptcha($request)
+	{
+		// call curl to POST request
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('secret' => '6LfbsO0iAAAAABOKD_tEg_Bru7jqFiyAKFhISGr7', 'response' => $request->token)));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		$arrResponse = json_decode($response, true);
+	
+		// verify the response
+		if($arrResponse["success"] == false) {
+			dd('Antiflood. Please go back. DO NO REFRESH THIS PAGE');
+		}
 	}
 }

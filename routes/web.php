@@ -20,7 +20,10 @@ Route::get('/updates/{id}/{subject}', 'HomeController@showUpdates');
 Route::get('/register', 'HomeController@register');
 Route::get('/rankings', 'HomeController@rank');
 Route::get('/rankings/{season}', 'HomeController@rank');
+Route::get('/class-rankings', 'HomeController@getClassRanking');
 Route::get('/bloodcastle-rankings', 'HomeController@bcrank');
+Route::get('/chaoscastle-rankings', 'HomeController@ccrank');
+Route::get('/devilsquare-rankings', 'HomeController@dsrank');
 Route::get('/gens-rankings', 'HomeController@gensrank');
 Route::get('/donations', 'HomeController@donations');
 
@@ -42,6 +45,7 @@ Route::post('/duelmaster', 'HomeController@postDuelmaster');
 Route::get('/lottery', 'HomeController@lottery');
 Route::post('/lottery', 'HomeController@postLottery');
 Route::get('/main', 'HomeController@mainLauncher');
+Route::get('/s18/main', 'HomeController@mainLauncher');
 Route::get('/news', 'HomeController@newsLauncher');
 Route::get('/more', 'HomeController@moreLauncher');
 
@@ -49,10 +53,9 @@ Route::get('/server-info/s15', 'HomeController@s15ServerInfo');
 Route::get('/server-info/s2', 'HomeController@s2ServerInfo');
 
 Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-    var_dump($exitCode);
+    Cache::flush();
 });
-
+Route::get('login', ['as' => 'login', 'uses' => 'HomeController@show']);
 /*
 * Authenticated user only.
 */
@@ -61,6 +64,7 @@ Route::get('/account/characters', 'AccountController@unstockCharacters')->middle
 Route::get('/account/rename', 'AccountController@renameCharacter')->middleware('auth');
 Route::post('/account/rename', 'AccountController@processRename')->middleware('auth');
 Route::post('/account/resetstats', 'AccountController@resetStats')->middleware('auth');
+Route::post('/account/reset-master', 'AccountController@resetMaster')->middleware('auth');
 Route::get('/account/transfer', 'AccountController@transferCharacter')->middleware('auth');
 
 
@@ -75,3 +79,13 @@ Route::post('/account/change-password', 'AccountController@postchangePassword')-
 Route::get('/account/donate', 'AccountController@donate')->middleware('auth');
 Route::post('/account/process-donate', 'AccountController@donateProcess')->middleware('auth');
 Route::get('/account/donation-history', 'AccountController@donationHistory')->middleware('auth');
+
+Route::get('/account/coupon-code', 'AccountController@couponCode')->middleware('auth');
+Route::post('/account/coupon-code', 'AccountController@postCouponCode')->middleware('auth');
+Route::get('/account/coupon-claim', 'AccountController@getCouponClaim')->middleware('auth');
+
+Route::get('/account/search', 'AccountController@searchUser')->middleware('auth');
+Route::post('/account/search', 'AccountController@postSearchUser')->middleware('auth');
+
+Route::get('/code-winners', 'AccountController@couponCodeWinner');
+

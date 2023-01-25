@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<title>Sea MU Online</title>
+<title>Play MU Online</title>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+ <script src="https://www.google.com/recaptcha/api.js?render=6LfbsO0iAAAAAH4J9WANGiX-G3BEzgBBcdnd-IBZ"></script>
 <link rel="shortcut icon" href="/img/ico.png" type="image/png" />
 <style>
 
@@ -15,7 +17,7 @@ font-family: "Helvetica";
 
 body { 
 	width: 100%;
-	background: url(/img/bg_v3.jpg) no-repeat center top;
+	background: url(/img/bg_main_11-2-2022_3.jpg) no-repeat center top;
 	background-color:black;
 	color:white;
 	
@@ -114,17 +116,18 @@ header{
 }
 
 #content #announcement{
-    padding:10px;
+    padding:10px 0;
 	height: 100%;
-    background: #3c2c1f url(/img/header_bg.jpg) repeat-x;
+    background: #601d0e  url(/img/header_bg_5.jpg) repeat-x;
     margin-bottom:10px;
-    min-height:265px;
+    padding-bottom:0;
+    background-size: 10px 90px;
 }
 
 #announcement h1{
-	color: #cfb265;
+	color: #fff;
     padding: 10px;
-    border-bottom: solid 1px #67482e;
+    border-bottom: solid 1px #340b02;
     margin-left: 15px;
     margin-right: 15px;
 	
@@ -132,7 +135,7 @@ header{
 }
 
 #announcement h3{
-	color: #cfb265;
+	color: #d0dcff;
     padding: 0;
     font-size: 23px;
 }
@@ -159,9 +162,9 @@ header{
 }
 
 #right-content h2{
-	color:#ffb400;
+	color:#fff;
 	text-align:left;
-	border-bottom: solid 1px #67482e;
+	border-bottom: solid 1px #340b02;
 	font-family: 'satyr', Arial, sans-serif;
     font-size: 20px;
     padding: 10px;
@@ -169,7 +172,7 @@ header{
 
 .right-content-border{
 	margin-bottom: 10px;
-    background: #1d0c0c  url(/img/header_bg.jpg) repeat-x;
+    background: #601d0e  url(/img/header_bg_5.jpg) repeat-x;
     background-size: 10px 45px;
 }
 
@@ -199,18 +202,18 @@ footer{
 
 
 #serverinfo th {
-        border-bottom: 1px dashed #67482e;
+        border-bottom: 1px dashed #340b02;
 		border-top: none !important;
 }
 
 #serverinfo td {
 		border-top: none !important;
-        border-bottom: 1px dashed #67482e;
+        border-bottom: 1px dashed #340b02;
         line-height:20px;
 }
 
 #serverinfo .server-stat{
-	color:#cfb265;
+	color:#fff;
 	width:50%;
 }
 #serverinfo .server-value {
@@ -236,8 +239,8 @@ footer{
     font-size: 13px;
 }
 input{
-	background-color: #331c0a !important;
-    border-color: #251509 !important;
+	background-color: #340b02  !important;
+    border-color: #340b02 !important;
 }
 .form-control{
     color:#fff;
@@ -258,7 +261,7 @@ input{
 #welcome-page h1{
 	font-size: 34px;
     padding: 22px 0;
-    color:#ffb400;
+    color:#fff;
 }
 
 .btn-login{
@@ -286,7 +289,7 @@ footer li a{
     padding: 10px 30px;
     font-size: 15px;
 	font-family: 'satyr', Arial, sans-serif;
-	color:#cfb265;
+	color:#fff;
 	text-decoration:none;
 }
 
@@ -345,6 +348,7 @@ footer #footer-content{
 .client-area .client-img{
     width:100%;
     max-width: 230px;
+    display:inline-block;
 }
 .client-area .logo-img{
     width:100%;
@@ -374,6 +378,31 @@ footer #footer-content{
 #content-container{
     padding: 20px;
     margin: 10px;
+}
+
+.active-online {
+    padding: 4px;
+    font-size: 13px !important;
+    color: #ff9b00;
+    border-bottom: solid 1px #ccc;
+    margin-bottom: 5px !important;
+    width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.servertime {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #b35d18;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(249, 104, 104, 0.5);
+    display: inline-block;
+    padding-top: 8px;
+    font-size: 20px !important;
 }
 </style>
 <div id="fb-root"></div>
@@ -457,6 +486,43 @@ $(function(){
 		}
 		
 	});
+    
+    $('.resetmaster').click(function(){
+		
+		var charname = $(this).attr('id');
+
+
+		if (confirm('Reset stats of ' + charname + '? This is currently free of charge')) {
+			$(this).hide();
+			$('#resetmaster-process-' + charname).show();
+			console.log('confirm');
+			var url = "{{ url('/') }}/account/reset-master"; // the script where you handle the form input.
+			
+			$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: {charname: charname}, // serializes the form's elements.
+	           success: function(data)
+	           {
+				   alert(data.info);
+				   if(data.code === 1){
+					   console.log(data.code);
+						$('#resetmaster-process-' + charname).text('Success!!!');
+				   }else{
+					   console.log(data.info);
+					   console.log(data.code);
+					   $('.resetmaster').show();
+					   $('.resetmaster-process').hide();
+				   }
+	           	
+	           }
+	         });
+			 
+		} else {
+			console.log('cancel');
+		}
+		
+	});
 
 });
 
@@ -467,13 +533,15 @@ $(function(){
 <header>
 <div class="client-area">
     <a href="{!! $content->where('id', 9)->first()->content !!}" target="_blank">
-        <img src="/img/s2_v1.png" class="client-img">
+        <img src="/img/s15dl1.png" class="client-img">
     </a>
     <img src="/img/mu_logo.png" class="logo-img">
     
-    <a href="{!! $content->where('id', 10)->first()->content !!}" target="_blank">
-        <img src="/img/s15_v1.png" class="client-img">
-    </a>
+    
+    <div class="client-img">
+        <p style="font-size: 12px;margin-bottom: 0;"><span style="color:#9cdc9c;font-size: 25px;font-weight: bold;line-height: 1;">ONLINE</span></p>
+        <p class="active-online">Active Players in last 24hrs: {{$online + 30}}</p>
+    </div>
 </div>
 </header>
 </div>
@@ -482,120 +550,30 @@ $(function(){
 		<ul>
 			<li><a href="/">Home</a></li>
 			<li style="padding: 0 16px;"><a href="/register">Register</a></li>
-			<li><a href="https://web.facebook.com/groups/551357492208200/" target="_blank">Community</a></li>
-			<li><a href="https://web.facebook.com/seamudotnet" target="_blank">Support</a></li>
-			<li><a href="/rankings">Rankings</a></li>
+			<li><a href="https://web.facebook.com/groups/playmuonline/" target="_blank">Community</a></li>
+			<li><a href="https://web.facebook.com/Play-MU-Support-108152511096032" target="_blank">Support</a></li>
+			<li><a href="/rankings/s15">Rankings</a></li>
 		</ul>
 	</div>
 </div>
 <div class="body-container">
 <div id="content">
-	<div id="right-content" class="center-area">
-        <div id="account-info" class="right-content-border" style="overflow:hidden">
-			<h2>Our Facebook Page</h2>
-			<div class="fb-page" data-href="https://web.facebook.com/seamudotnet/" data-tabs="timeline" data-width="336" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
-		</div>
-        <div id="serverinfo" class="right-content-border">
-			<h2>Season 2 Information</h2>
-			<table  class="table table-dark">
-			  <thead>
-			
-			  </thead>
-			  <tbody>
-				<tr>
-					<td class="server-stat">Version</td>
-					<td class="server-value">Season 2</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Experience</td>
-					<td class="server-value">x10</td>
-				</tr>
-                <tr>
-					<td class="server-stat">Seal Experience</td>
-					<td class="server-value">None</td>
-				</tr>
-                <tr>
-					<td class="server-stat">VIP Server</td>
-					<td class="server-value">None</td>
-				</tr>
-
-				<tr>
-					<td class="server-stat">Max Level</td>
-					<td class="server-value">400</td>
-				</tr>
-	
-				<tr>
-					<td class="server-stat">Max Class</td>
-					<td class="server-value">Second</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Wing</td>
-					<td class="server-value">Second</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Max Item Level</td>
-					<td class="server-value">13</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Summoner</td>
-					<td class="server-value">No</td>
-				</tr>
-				<tr>
-					<td class="server-stat">Rage Fighter</td>
-					<td class="server-value">No</td>
-				</tr>
-				</tr>
-			  </tbody>
-			</table>
-            <div class="read-more"><a href="/server-info/s2">Read more
-            <svg class="bi bi-chevron-double-right" width="10px" height="10px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-            </a></div>
-		</div>
-        <div id="serverinfo" class="right-content-border">
-            <h2>Season 2 Rankings</h2>
-            <div class="read-more">
-                <table  class="table table-dark">
-                    <tr>
-                      <th>Rank</th>
-                      <th>Name</th>
-                      <th>Level</th>
-
-                    </tr>
-                @foreach($rankings as $key => $v)
-                    @if($key < 5)
-                    <tr>
-                        <td class="server-stat">{{$key+1}}</td>
-                        <td class="server-stat">{{$v->name}}</td>
-                        <td class="server-value">{{$v->total_level}}</td>
-                    </tr>
-                    @endif
-                @endforeach
-                </table>
-                <a href="/rankings/s2">Read more
-                <svg class="bi bi-chevron-double-right" width="10px" height="10px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                  <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-                </a>
-            </div>
-		</div>
-    </div>
-	<div id="left-content" class="center-area" style="width:48%; margin:0 10px;">
+	<div id="left-content" class="center-area" style="width:48%; margin:0 10px;width:73%;">
+        @if(Request::is('/'))
         <div id="announcement">
             <div id="welcome-page">
-            <h1>Welcome to Sea MU!</h1>
-            <p> A Community of Well Experienced and Professional MU Players gathered together by their Love and Passion on playing MU Online Game… The Castle Siege, the Duel Room, PVP Fight and Events are the most Important Module of Sea MU.</p>
+            <h1>Welcome to Play MU!</h1>
+            <img src="/img/fb_header2.jpg" style="width: 100%;margin: 0 auto;padding: 10px;">
+            <p> A Community of Well Experienced and Professional MU Players gathered together by their Love and Passion on playing MU Online Game… The Castle Siege, the Duel Room, PVP Fight and Events are the most Important Module of Play MU.</p>
             </div>
             <!--<div id="content">
                 @yield('content')
             </div>-->
             
         </div>
+        @endif
         
-        <div id="announcement" style="background-size: 10px 73px;background-color:#1d0c0c;padding:0">
+        <div id="announcement" style="background-size: 10px 73px;background-color:#601d0e;padding:0">
             <div id="content" style="margin:0">
                 @yield('content')
             </div>
@@ -612,6 +590,12 @@ $(function(){
 				<ul>
 					<li><a href="{{ url('/') }}/account/info">Account Information</a></li>
 					<li><a href="{{ url('/') }}/account/change-password">Change Password</a></li>
+                    @if(in_array(Auth::user()->memb___id, $merchant))
+                    <li><a href="{{ url('/') }}/account/wcoins">Transfer WC (GM Only)</a></li>
+                    <li><a href="{{ url('/') }}/account/search">Search User (GM Only)</a></li>
+                    @endif
+					<li><a href="{{ url('/') }}/account/donate">Buy WCoins</a></li>
+                    <li><a href="{{ url('/') }}/account/coupon-code">Claim Coupon Code</a></li>
 					<li><a href="{{ url('/') }}/logout">Logout</a></li>
 				</ul>
 			</div>
@@ -630,14 +614,18 @@ $(function(){
 				</form>
 				
 				<div id="account-info">
-					<div id="forgotpass">Forgot your password? <a href="#">Click Here</a></div>
-					<div id="reg">New player? <a href="#">Register</a></div>
+					<div id="forgotpass">Forgot your password? <a href="/forgot-password">Click Here</a></div>
+					<div id="reg">New player? <a href="/register">Register</a></div>
 				</div>
 			</div>
 			@endif
 		</div>
+        <div id="account-info" class="right-content-border" style="overflow:hidden">
+			<h2>Our Facebook Page</h2>
+			<div class="fb-page" data-href="https://web.facebook.com/Play-MU-Support-108152511096032" data-tabs="timeline" data-width="336" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
+		</div>
         <div id="serverinfo" class="right-content-border">
-			<h2>Season 15 Information</h2>
+			<h2>Season 18 Part Information</h2>
 			<table  class="table table-dark">
 			  <thead>
 			
@@ -645,23 +633,23 @@ $(function(){
 			  <tbody>
 				<tr>
                     <td class="server-stat">Version</td>
-                    <td class="server-value">Season 15 Part 1-3</td>
+                    <td class="server-value">Season 18 Part 1</td>
                 </tr>
                 <tr>
                     <td class="server-stat">Normal Experience</td>
-                    <td class="server-value">x1500</td>
+                    <td class="server-value">x30000</td>
                 </tr>
                 <tr>
                     <td class="server-stat">Master Experience</td>
-                    <td class="server-value">x1500</td>
+                    <td class="server-value">x30000</td>
                 </tr>
                 <tr>
                     <td class="server-stat">Majestic Experience</td>
-                    <td class="server-value">x1500</td>
+                    <td class="server-value">x30000</td>
                 </tr>
                 <tr>
                     <td class="server-stat">Experience Multiplies</td>
-                    <td class="server-value">x3 bonus per member</td>
+                    <td class="server-value">x1 multiplier bonus per party member</td>
                 </tr>
                 <tr>
                     <td class="server-stat">Seal Experience</td>
@@ -682,7 +670,7 @@ $(function(){
                 </tr>
                 <tr>
                     <td class="server-stat">Max Majestic Level</td>
-                    <td class="server-value">400</td>
+                    <td class="server-value">650</td>
                 </tr>
 			  </tbody>
 			</table>
@@ -696,7 +684,7 @@ $(function(){
             </div>
 		</div>
 		
-		<div id="serverinfo" class="right-content-border">
+		<!--<div id="serverinfo" class="right-content-border">
             <h2>Season 15 Rankings</h2>
             <table  class="table table-dark">
                     <tr>
@@ -724,7 +712,7 @@ $(function(){
                 </svg>
                 </a>
             </div>
-		</div>
+		</div> -->
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -742,8 +730,8 @@ $(function(){
 		</ul>
 		<div id="footer-btm">
 			<div class="float-left">
-				<p>Sea MU Online Provided by IGC Network</p>
-				<p>Copyright Sea MU</p>
+				<p>Play MU Online Provided by IGC Network</p>
+				<p>Copyright Play MU</p>
 				<p>ALL RIGHTS RESERVE</p>
 			</div>
 			<div class="float-right">

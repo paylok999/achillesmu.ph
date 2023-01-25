@@ -21,14 +21,11 @@
 
 <p class="account">Username: {{Auth::user()->memb___id}}</p>
 <p class="account">Email: {{Auth::user()->mail_addr}}</p>
-<h4>Season 2</h4>
-<p class="account">WcoinsC: {{$wcoins->WCoinC}}</p>
-<p class="account">WcoinsP: {{$wcoins->WCoinP}}</p>
-<p class="account">Goblin Points: {{$wcoins->GoblinPoint}}</p>
 <h4>Season 15</h4>
 <p class="account">Wcoins: {{$wcoins->WCoin}}</p>
 
 <p class="account">Goblin Points: {{$wcoins->GoblinPoint15}}</p>
+<p class="account">Loyalty Points: {{ isset($loyalty_points->points) ? $loyalty_points->points - $loyalty_points->claimed  : 0 }}</p>
 
 <h1>Characters</h1>
 <p>Below you can see your character details</p>
@@ -42,6 +39,7 @@
 	  <th>Unstuck</th>
 	  <th>Rename</th>
 	  <th>Reset Stats</th>
+	  <th>Reset Master</th>
 	</tr>
   </thead>
   <tbody>
@@ -55,6 +53,10 @@
 	  <td>
 		<a href="javascript:void(0);" class="resetstats" id="{{$v->name}}">Reset Stats</a>
 		<span id="resetstats-process-{{$v->name}}" class="resetstats-process" style="display:none;color: green;font-size: 14px;">Processing....</span>
+	  </td>
+      <td>
+		<a href="javascript:void(0);" class="resetmaster" id="{{$v->name}}">Reset Master</a>
+		<span id="resetmaster-process-{{$v->name}}" class="resetmaster-process" style="display:none;color: green;font-size: 14px;">Processing....</span>
 	  </td>
 	</tr>
 	@endforeach

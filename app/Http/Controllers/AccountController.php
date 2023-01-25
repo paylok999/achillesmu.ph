@@ -162,16 +162,16 @@ class AccountController extends Controller
 	public function donate()
 	{
 		$this->data['pricing'] = [
-			'100'  => '500',
-			'200'  => '1000 (+100 bonus)',
-			'300'  => '1500 (+150 bonus)',
-			'400'  => '2000 (+170 bonus)',
-			'500'  => '2500 (+200 bonus)',
-			'1000' => '5000 (+400 bonus)',
-			'1500' => '7500 (+500 bonus)',
-			'2000' => '10000 (+700 bonus)',
-			'2500' => '12500 (+1000 bonus)',
-			'5000' => '25500 (+2500 bonus)',
+			'100'  => '100',
+			'200'  => '200 (10% bonus)',
+			'300'  => '300 (11% bonus)',
+			'400'  => '400 (12% bonus)',
+			'500'  => '500 (13% bonus)',
+			'1000' => '1000 (14% bonus)',
+			'1500' => '1500 (15% bonus)',
+			'2000' => '2000 (16% bonus)',
+			'2500' => '2500 (18% bonus)',
+			'5000' => '5000 (20% bonus)',
 
 		];
 
@@ -248,4 +248,177 @@ class AccountController extends Controller
 		return $msg;
 		
 	}
+    
+    function resetMaster(Request $request)
+	{
+		$url = '/achillesmu/public/api/user/msreset';
+		
+		$data['charname'] = $request->charname;
+		$data['username'] = Auth::user()->memb___id;
+
+		$res = $this->callApi($url, $data);
+
+		if($res->callback == 1)
+		{
+			$msg['info'] = 'Stat Reset of '. $data['charname'] . ' is successful!';
+			$msg['code'] = 1;
+		}else{
+			$msg['info'] = $res->callback;
+			$msg['code'] = 0;
+		}
+		
+		return $msg;
+		
+	}
+    
+    public function couponCode(Request $request)
+    {
+		$this->data['userCoupon'] = DB::table('coupon')
+        ->where('username', Auth::user()->memb___id)
+        ->get();
+		
+		$this->data['prizes'] = $this->generateRafflePrizes();
+		
+        return view('account.couponcode', $this->data);
+    }
+    
+    public function couponCodeWinner(Request $request)
+    {
+        $coupon =  DB::table('coupon')
+        ->where('claimed', 1)
+        ->where('event', $request->event)
+        ->get();
+
+        $this->data['coupon'] = [];
+        $this->data['event'] = $request->event;
+        if(count($coupon) >= 1){
+             foreach($coupon as $k => $v){
+                $url = '/achillesmu/public/api/user/allcharacter/'. $v->username;
+                $characters = (array) $this->callGetApi($url, $data = array())[0];
+                $this->data['coupon'][] = ['name' => $characters['name'], 'coupon' => $v->coupon, 'prize' => $v->prize];
+            }
+        }
+        
+        return view('account.coupon-winners', $this->data);
+    }
+    
+     public function postCouponCode(Request $request)
+    {
+		$this->verifyGoogleRecaptcha($request);
+
+        $data['username']  = Auth::user()->memb___id;
+        $data['ip'] = $request->ip();
+        
+        $coupon =  DB::table('coupon')
+        ->where('coupon', $request->couponcode)
+        ->first();
+        
+        if(isset($coupon->coupon)){
+            echo 'iseet';
+            if($coupon->username != '') {
+                echo 'claimed';
+                $msg = 'Coupon ' . $request->couponcode . ' already claimed. Please try again';
+                $suc = 0;
+            }else{
+                echo 'check';
+                $checkUser = DB::table('coupon')
+                ->where('username', $data['username'])
+                ->orWhere('ip', $data['ip'])
+                ->first();
+
+				echo 'insert';
+				$update = DB::table('coupon')
+				->where('coupon', $request->couponcode)
+				->update($data);
+				$msg = 'You have successfully win ' .  $coupon->prize . ' using '.$request->couponcode.'! Please use the form below to claim';
+				$suc = 1;
+            }
+        }else{
+            $msg = 'Coupon ' . $request->couponcode . ' with eventID of '.$request->event.' is invalid or already claimed. Please try again';
+            $suc = 0;
+        }
+        
+        return redirect('/account/coupon-code')->with(['msg' => $msg, 'suc' => $suc]);
+        
+    }
+	
+	public function getCouponClaim(Request $request)
+	{
+		$this->verifyGoogleRecaptcha($request);
+		
+		$checkCoupon = DB::table('coupon')
+        ->where('id', $request->id)
+        ->where('username', Auth::user()->memb___id)
+        ->where('claimed', 0)
+        ->first();
+		$suc = 0;
+		
+		
+		if($checkCoupon == null) {
+			$msg = 'Invalid coupon ID';
+			return redirect('/account/coupon-code')->with(['msg2' => $msg, 'suc2' => $suc]);
+			exit();
+		}
+		
+		if($checkCoupon->claimed == 1) {
+			$msg = 'Coupon already claimed';
+			return redirect('/account/coupon-code')->with(['msg2' => $msg, 'suc2' => $suc]);
+			exit();
+		}
+		
+		//claim
+		if(isset($checkCoupon->coupon)) {
+			//$checkCoupon->claimed = 1;
+			//$checkCoupon->save();
+			
+			$url = '/achillesmu/public/api/gremory';
+			$data['username'] = Auth::user()->memb___id;
+			$data['itemcode'] = $checkCoupon->prize;
+			$data['hash'] = $this->hashkey;
+			$res = $this->callApi($url, $data);
+			
+			if($res->callback == 1)
+			{
+				$update = DB::table('coupon')->where('id', $request->id)->update(array('claimed' => 1));
+				if ($update == 1) {
+					$msg = 'Prize sent to your gremory case. Please check';
+					$suc = 1;
+					return redirect('/account/coupon-code')->with(['msg2' => $msg, 'suc2' => $suc]);
+				}
+			} else {
+				$msg = $res->callback;
+				return redirect('/account/coupon-code')->with(['msg2' => $msg, 'suc2' => $suc]);
+			}
+			
+		}
+	}
+    
+    public function searchUser()
+    {
+        return view('account.search', $this->data);
+    }
+    
+    public function postSearchUser(Request $request)
+    {
+       $userInfo = [];
+       $suc = 0;
+       $msg = 'User Not Found!!!';
+       if(in_array(Auth::user()->memb___id, $this->data['merchant'])){
+           
+           if(isset($request->username)) {
+                 $data['username']  = $request->username;
+                $userInfo = $this->getUser($data['username']);
+                if(isset($userInfo->memb___id)) {
+                    $msg = 'User Found!';
+                    $suc = 1;
+                }else{
+                    $msg = 'User Not Found!';
+                }
+            }else {
+                $msg = 'User Not Found!!';
+            }
+       }
+
+       return redirect('/account/search')->with(['msg' => $msg, 'suc' => $suc, 'userInfo' => $userInfo]);
+    }
 }
